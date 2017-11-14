@@ -15,8 +15,13 @@ class Move extends React.Component {
         return (
             <li key={this.props.index}>
                 <button onClick={() => this.props.onClick}>
-                    {this.props.description + " " + this.props.coors[0] + " " + this.props.coors[0]}
-                        </button>
+                    {this.props.description}
+                </button>
+                {this.props.coors &&
+                    <p>
+                        Square changed: [{this.props.coors[0] + " " + this.props.coors[1]}]
+                    </p>
+                }                
             </li>
         );
     }
@@ -74,14 +79,18 @@ class Game extends React.Component {
         const history = this.state.history;
         const current = history[this.state.stepNumber];
         const winner = calculateWinner(current.squares);
-        console.log(history);
-        const moves = history.map((step, move) => {
-            const desc = (
-                move ? 'Go to move #' + move : 'Go to game start'
-            );
-            const c = this.getSquareCoordinatesByIndex(history[move].dirtySquareIndex);
+        const moves = history.map((historyItem, move) => {
+            let desc, coors;
+            if (move) {
+                desc = 'Go to move #' + move;
+                coors = this.getSquareCoordinatesByIndex(historyItem.dirtySquareIndex);
+            }
+            else {
+                desc = 'Go to game start';
+            }
+
             return (
-                <Move index={move} description={desc} onClick={() => this.jumpTo(move)} coors={c} />
+                <Move key={move} index={move} description={desc} onClick={() => this.jumpTo(move)} coors={coors} />
             );
         })
 
@@ -120,14 +129,7 @@ class Game extends React.Component {
     }
 
     getSquareCoordinatesByIndex(index) {
-        return [Math.floor(index / 3), index % 3];
-    }
-
-    formatSquareCoordinates(coors) {
-        console.log(coors[0]);
-        return (
-            <span class="coor">({coors[0]}, {coors[1]})</span>
-        );
+        return [index % 3, Math.floor(index / 3)];
     }
 }
 

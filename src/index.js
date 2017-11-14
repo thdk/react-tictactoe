@@ -14,7 +14,7 @@ class Move extends React.Component {
     render(props) {
         return (
             <li key={this.props.index}>
-                <button onClick={() => this.props.onClick}>
+                <button onClick={this.props.onClick}>
                     {this.props.description}
                 </button>
                 {this.props.coors &&

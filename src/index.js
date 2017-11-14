@@ -10,9 +10,6 @@ function Square(props) {
     );
 }
 
-<<<<<<< HEAD
-class Board extends React.Component {    
-=======
 class Move extends React.Component {
     render(props) {
         return (
@@ -31,7 +28,6 @@ class Move extends React.Component {
 }
 
 class Board extends React.Component {
->>>>>>> issue-1
     renderSquare(i) {
         return <Square value={this.props.squares[i]} onClick={() => this.props.onClick(i)} />;
     }
@@ -87,6 +83,7 @@ class Game extends React.Component {
             let desc, coors;
             if (move) {
                 desc = 'Go to move #' + move;
+                console.log(historyItem);
                 coors = this.getSquareCoordinatesByIndex(historyItem.dirtySquareIndex);
             }
             else {

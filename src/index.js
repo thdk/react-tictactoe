@@ -10,7 +10,28 @@ function Square(props) {
     );
 }
 
+<<<<<<< HEAD
 class Board extends React.Component {    
+=======
+class Move extends React.Component {
+    render(props) {
+        return (
+            <li key={this.props.index}>
+                <button onClick={() => this.props.onClick}>
+                    {this.props.description}
+                </button>
+                {this.props.coors &&
+                    <p>
+                        Square changed: [{this.props.coors[0] + " " + this.props.coors[1]}]
+                    </p>
+                }                
+            </li>
+        );
+    }
+}
+
+class Board extends React.Component {
+>>>>>>> issue-1
     renderSquare(i) {
         return <Square value={this.props.squares[i]} onClick={() => this.props.onClick(i)} />;
     }
@@ -62,6 +83,7 @@ class Game extends React.Component {
         const history = this.state.history;
         const current = history[this.state.stepNumber];
         const winner = calculateWinner(current.squares);
+<<<<<<< HEAD
 
         const moves = history.map((step, move) => {
             const desc = move ? 'Go to move #' + move : 'Go to game start';
@@ -70,6 +92,20 @@ class Game extends React.Component {
                     <button onClick={() => this.jumpTo(move)}>
                     {desc}</button>
                 </li>
+=======
+        const moves = history.map((historyItem, move) => {
+            let desc, coors;
+            if (move) {
+                desc = 'Go to move #' + move;
+                coors = this.getSquareCoordinatesByIndex(historyItem.dirtySquareIndex);
+            }
+            else {
+                desc = 'Go to game start';
+            }
+
+            return (
+                <Move key={move} index={move} description={desc} onClick={() => this.jumpTo(move)} coors={coors} />
+>>>>>>> issue-1
             );
         })
 
@@ -105,6 +141,13 @@ class Game extends React.Component {
             xIsNext: !this.state.xIsNext
         });
     }
+<<<<<<< HEAD
+=======
+
+    getSquareCoordinatesByIndex(index) {
+        return [index % 3, Math.floor(index / 3)];
+    }
+>>>>>>> issue-1
 }
 
 function calculateWinner(squares) {

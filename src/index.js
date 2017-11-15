@@ -11,19 +11,33 @@ function Square(props) {
 }
 
 class Move extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            isSelected: false
+        }
+    }
+
     render(props) {
         return (
             <li key={this.props.index}>
                 <button onClick={this.props.onClick}>
                     {this.props.description}
                 </button>
-                {this.props.coors &&
-                    <p>
-                        Square changed: [{this.props.coors[0] + " " + this.props.coors[1]}]
-                    </p>
-                }                
+                {this.props.coors && this.props.isSelected ? (
+                    <p><strong>Square changed: [{this.props.coors[0] + " " + this.props.coors[1]}]</strong></p>
+                 ): (this.props.coors &&
+                    <p>Square changed: [{this.props.coors[0] + " " + this.props.coors[1]}]</p>
+                 )}           
             </li>
         );
+    }
+
+    handleClick() {
+        this.setState((prevState, props) => ({
+                isSelected: !prevState.isSelected            
+        }));
+        this.props.onClick();
     }
 }
 
@@ -83,7 +97,6 @@ class Game extends React.Component {
             let desc, coors;
             if (move) {
                 desc = 'Go to move #' + move;
-                console.log(historyItem);
                 coors = this.getSquareCoordinatesByIndex(historyItem.dirtySquareIndex);
             }
             else {
@@ -91,7 +104,7 @@ class Game extends React.Component {
             }
 
             return (
-                <Move key={move} index={move} description={desc} onClick={() => this.jumpTo(move)} coors={coors} />
+                <Move key={move} index={move} description={desc} onClick={() => this.jumpTo(move)} coors={coors} isSelected={move === this.state.stepNumber}/>
             );
         })
 

@@ -11,13 +11,6 @@ function Square(props) {
 }
 
 class Move extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            isSelected: false
-        }
-    }
-
     render(props) {
         return (
             <li key={this.props.index}>
@@ -31,13 +24,6 @@ class Move extends React.Component {
                  )}           
             </li>
         );
-    }
-
-    handleClick() {
-        this.setState((prevState, props) => ({
-                isSelected: !prevState.isSelected            
-        }));
-        this.props.onClick();
     }
 }
 
